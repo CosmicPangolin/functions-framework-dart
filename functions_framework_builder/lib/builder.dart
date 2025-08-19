@@ -54,7 +54,7 @@ class _FunctionsFrameworkBuilder implements Builder {
 
     for (var annotatedElement in _fromLibrary(libraryElement)) {
       final element = annotatedElement.element;
-      if (element is! FunctionElement || element.isPrivate) {
+      if (element is! TopLevelFunctionElement || element.isPrivate) {
         throw InvalidGenerationSourceError(
           'Only top-level, public functions are supported.',
           element: element,
@@ -74,7 +74,7 @@ class _FunctionsFrameworkBuilder implements Builder {
 
       final invokeExpression = validator.validate(
         libraryElement,
-        targetName,
+        targetName!,
         element,
       );
 
@@ -142,8 +142,8 @@ Iterable<AnnotatedElement> _fromLibrary(LibraryElement library) sync* {
   // While neither is supported, it allows us to provide helpful errors if devs
   // are using the annotations incorrectly.
   final mergedElements = {
-    ...library.topLevelElements,
-    ...library.exportNamespace.definedNames.values,
+    ...library.topLevelFunctions,
+    ...library.exportNamespace.definedNames2.values,
   };
 
   for (var element in mergedElements) {

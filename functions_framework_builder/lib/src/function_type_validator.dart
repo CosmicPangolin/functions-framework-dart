@@ -27,7 +27,7 @@ class FunctionTypeValidator {
   FactoryData validate(
     LibraryElement library,
     String targetName,
-    FunctionElement element,
+    TopLevelFunctionElement element,
   ) {
     for (var type in _types) {
       final reference = type.createReference(library, targetName, element);
